@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     TaskDataSource taskDataSource;
     EditText etDate, etTask, etStatus;
-    Button btnSave, btnView;
+    Button btnSave, btnView, btnUpdate, btnDelete;
     TextView tvOutput;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnView = findViewById(R.id.btnView);
         tvOutput = findViewById(R.id.tvOutput);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,5 +60,23 @@ public class MainActivity extends AppCompatActivity {
                 tvOutput.setText(outputText.toString());
             }
         });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               taskDataSource.updateData(1,"22/04/2024","Lab Task 3","Done");
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                taskDataSource.deleteData(3);
+            }
+        });
     }
+
+
+
+
 }
