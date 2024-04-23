@@ -11,6 +11,10 @@ public class TaskDataModel {
     }
 
     public TaskDataModel(long id, String date, String task, String status) {
+        this.id = id;
+        this.date = date;
+        this.task = task;
+        this.status = status;
     }
 
     public long getId() {
@@ -45,5 +49,5 @@ public class TaskDataModel {
         this.status = status;
     }
 
-    // Constructor, getters, and setters
+
 }
