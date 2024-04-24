@@ -26,10 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         taskDataSource = new TaskDataSource(getApplicationContext());
         taskDataSource.open();
-
 
         etDate = findViewById(R.id.etDate);
         etTask = findViewById(R.id.etTask);
