@@ -31,7 +31,8 @@ public class TaskDataSource {
 return db.query("tblTask",allColumns, null,null,null,null,null);
     }
 
-    public int updateData(Integer id, String date, String task, String status) {
+public int updateData(Integer id, String date, String task,
+                      String status) {
         ContentValues values = new ContentValues();
         values.put("date", date);
         values.put("task", task);
@@ -40,12 +41,8 @@ return db.query("tblTask",allColumns, null,null,null,null,null);
                new String[]{String.valueOf(id)});
     }
 
-    public void deleteData(Integer id) {
-        db.delete("tblTask", "id = " + id, null);
-        db.delete("sqlite_sequence", "name = " + "'tblTask'", null);
-       
-
-
+public void deleteData(Integer id) {
+  db.delete("tblTask", "id = " + id, null);
     }
 
 }

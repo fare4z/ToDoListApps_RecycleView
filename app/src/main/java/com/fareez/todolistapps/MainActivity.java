@@ -64,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               taskDataSource.updateData(1,"22/04/2024","Lab Task 3","Done");
+                taskDataSource.updateData(
+                        1,"24/04/2024","PBT 2","Done"
+                );
             }
         });
-
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
