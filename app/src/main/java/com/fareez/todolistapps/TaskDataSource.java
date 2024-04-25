@@ -42,9 +42,11 @@ return db.query("tblTask",allColumns, null,null,null,null,null);
 
     public void deleteData(Integer id) {
         db.delete("tblTask", "id = " + id, null);
+    }
+
+    public void clearData() {
+        db.delete("tblTask", null, null);
         db.delete("sqlite_sequence", "name = " + "'tblTask'", null);
-
-
     }
 
 }
