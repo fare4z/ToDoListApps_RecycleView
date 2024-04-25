@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         taskDataSource = new TaskDataSource(getApplicationContext());
         taskDataSource.open();
-        loadDataFromDatabase();
+
 
         etDate = findViewById(R.id.etDate);
         etTask = findViewById(R.id.etTask);
@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnView = findViewById(R.id.btnView);
         btnDelete = findViewById(R.id.btnDelete);
+        tvOutput = findViewById(R.id.tvOutput);
+
+        loadDataFromDatabase();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 etTask.setText(null);
                 etStatus.setText(null);
 
-                Toast.makeText(MainActivity.this, "New Task Inserted", Toast.LENGTH_SHORT).show();
+                loadDataFromDatabase();
+
+                Toast.makeText(MainActivity.this, "A new task has been inserted", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -68,12 +73,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 taskDataSource.clearData();
+                loadDataFromDatabase();
+                Toast.makeText(MainActivity.this, "All data has been removed", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void loadDataFromDatabase() {
         Cursor cursor = taskDataSource.getAllTaskData();
+        StringBuilder outputText = new StringBuilder();
         if (cursor.moveToFirst()) {
             do {
                 long id = cursor.getLong(cursor.getColumnIndex("id"));
@@ -81,8 +89,15 @@ public class MainActivity extends AppCompatActivity {
                 String task = cursor.getString(cursor.getColumnIndex("task"));
                 String status = cursor.getString(cursor.getColumnIndex("status"));
 
+                outputText.append("ID : ").append(id).append("\n")
+                        .append("Date : ").append(date).append("\n")
+                        .append("Task : ").append(task).append("\n")
+                        .append("Status : ").append(status).append("\n").append("\n");
+
             } while (cursor.moveToNext());
         }
+
+        tvOutput.setText(outputText);
 
     }
 }

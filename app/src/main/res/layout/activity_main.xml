@@ -64,6 +64,12 @@
             android:text="Clear Data" />
 
 
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="?android:attr/listDivider"
+            android:fadingEdge="horizontal" />
 
         <ScrollView
             android:layout_width="match_parent"
