@@ -26,7 +26,6 @@ public class ViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        // Initialize RecyclerView and adapter
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskList = new ArrayList<>();
@@ -39,11 +38,9 @@ public class ViewActivity extends AppCompatActivity {
         taskAdapter.setOnDeleteButtonClickListener(new TaskAdapter.OnDeleteButtonClickListener() {
             @Override
             public void onDeleteButtonClick(int position) {
-                // Get the ID of the selected task
+
                 long selectedTaskId = taskList.get(position).getId();
-                // Delete the task with the selected ID from the database
                 taskDataSource.deleteData((int) selectedTaskId);
-                // Remove the task from the list and update the RecyclerView
                 taskList.remove(position);
                 taskAdapter.notifyItemRemoved(position);
             }
@@ -65,34 +62,29 @@ public class ViewActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_update_task, null);
         builder.setView(dialogView);
 
-        // Initialize EditText fields
-        EditText editTextDate = dialogView.findViewById(R.id.editTextDate);
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask);
-        EditText editTextStatus = dialogView.findViewById(R.id.editTextStatus);
+        EditText etDateUpd = dialogView.findViewById(R.id.etDateUpd);
+        EditText etTaskUpd = dialogView.findViewById(R.id.etTaskUpd);
+        EditText etStatusUpd = dialogView.findViewById(R.id.etStatusUpd);
 
-        // Set current task information in EditText fields
         TaskDataModel task = taskList.get(position);
-        editTextDate.setText(task.getDate());
-        editTextTask.setText(task.getTask());
-        editTextStatus.setText(task.getStatus());
+        etDateUpd.setText(task.getDate());
+        etTaskUpd.setText(task.getTask());
+        etStatusUpd.setText(task.getStatus());
 
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Get updated task information from EditText fields
-                String updatedDate = editTextDate.getText().toString();
-                String updatedTask = editTextTask.getText().toString();
-                String updatedStatus = editTextStatus.getText().toString();
 
-                // Update the task in the database
+                String updatedDate = etDateUpd.getText().toString();
+                String updatedTask = etTaskUpd.getText().toString();
+                String updatedStatus = etStatusUpd.getText().toString();
+
                 taskDataSource.updateData((int) task.getId(), updatedDate, updatedTask, updatedStatus);
 
-                // Update the task in the list
                 task.setDate(updatedDate);
                 task.setTask(updatedTask);
                 task.setStatus(updatedStatus);
 
-                // Notify the adapter of the data change
                 taskAdapter.notifyItemChanged(position);
             }
         });
@@ -106,10 +98,10 @@ public class ViewActivity extends AppCompatActivity {
         Cursor cursor = taskDataSource.getAllTaskData();
         if (cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(cursor.getColumnIndex("id"));
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                String task = cursor.getString(cursor.getColumnIndex("task"));
-                String status = cursor.getString(cursor.getColumnIndex("status"));
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                String task = cursor.getString(cursor.getColumnIndexOrThrow("task"));
+                String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
 
                 taskList.add(new TaskDataModel(id, date, task, status));
             } while (cursor.moveToNext());

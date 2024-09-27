@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         taskDataSource = new TaskDataSource(getApplicationContext());
         taskDataSource.open();
 
-
         etDate = findViewById(R.id.etDate);
         etTask = findViewById(R.id.etTask);
         etStatus = findViewById(R.id.etStatus);
@@ -84,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder outputText = new StringBuilder();
         if (cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(cursor.getColumnIndex("id"));
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                String task = cursor.getString(cursor.getColumnIndex("task"));
-                String status = cursor.getString(cursor.getColumnIndex("status"));
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                String task = cursor.getString(cursor.getColumnIndexOrThrow("task"));
+                String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
 
                 outputText.append("ID : ").append(id).append("\n")
                         .append("Date : ").append(date).append("\n")
