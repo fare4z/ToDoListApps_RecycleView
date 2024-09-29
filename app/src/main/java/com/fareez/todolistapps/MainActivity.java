@@ -40,25 +40,29 @@ public class MainActivity extends AppCompatActivity {
 
         loadDataFromDatabase();
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskDataSource.insertTaskData(
-                        etDate.getText().toString(),
-                        etTask.getText().toString(),
-                        etStatus.getText().toString()
-                );
+                String date = etDate.getText().toString();
+                String task = etTask.getText().toString();
+                String status = etStatus.getText().toString();
+
+                if(date.isEmpty() || task.isEmpty() || status.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                taskDataSource.insertTaskData(date, task, status);
 
                 etDate.setText(null);
                 etTask.setText(null);
                 etStatus.setText(null);
 
                 loadDataFromDatabase();
-
                 Toast.makeText(MainActivity.this, "A new task has been inserted", Toast.LENGTH_SHORT).show();
-
             }
         });
+
 
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,4 +103,6 @@ public class MainActivity extends AppCompatActivity {
         tvOutput.setText(outputText);
 
     }
+
+
 }
